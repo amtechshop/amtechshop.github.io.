@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AM TECH SHOP</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { background-color: #000; color: #fff; padding: 1rem; text-align: center; }
+    nav { display: flex; justify-content: center; gap: 1rem; background: #222; padding: 1rem; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    .banner { text-align: center; padding: 2rem; background-color: #f0f0f0; }
+    .banner img { max-width: 150px; }
+    .section { padding: 2rem; }
+    .produtos, .servicos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; text-align: center; }
+    .card button { margin-top: 1rem; background-color: #25D366; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+    footer { background-color: #000; color: #fff; padding: 1rem; text-align: center; }
+    .whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 1rem; border-radius: 50%; font-size: 1.5rem; z-index: 999; }
+    #carrinho { position: fixed; top: 20px; right: 20px; background: #fff; border: 1px solid #ccc; padding: 1rem; width: 300px; display: none; z-index: 1000; }
+    #carrinho h3 { margin-top: 0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="AM TECH SHOP Logo" height="80">
+    <h1>AM TECH SHOP</h1>
+    <p>Venda e reparação de eletrônicos em Maputo</p>
+  </header>
+
+  <nav>
+    <a href="#produtos">Produtos</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#" onclick="mostrarCarrinho()">Carrinho (<span id="quantidade">0</span>)</a>
+  </nav>
+
+  <section class="banner">
+    <h2>Bem-vindo à AM TECH SHOP</h2>
+    <p>Compre online e receba em casa. Pagamento via M-Pesa ou e-Mola.</p>
+    <a href="https://wa.me/seu_numero" class="whatsapp" title="Contactar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </section>
+
+  <section class="section" id="produtos">
+    <h2>Produtos</h2>
+    <div class="produtos">
+      <div class="card">
+        <h3>Telefones</h3>
+        <p>Smartphones das melhores marcas.</p>
+        <button onclick="adicionarCarrinho('Telefones')">Adicionar</button>
+      </div>
+      <div class="card">
+        <h3>Computadores</h3>
+        <p>Laptops e PCs para trabalho ou lazer.</p>
+        <button onclick="adicionarCarrinho('Computadores')">Adicionar</button>
+      </div>
+      <div class="card">
+        <h3>Acessórios</h3>
+        <p>Cabos, carregadores, capas e mais.</p>
+        <button onclick="adicionarCarrinho('Acessórios')">Adicionar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="servicos">
+    <h2>Serviços</h2>
+    <div class="servicos">
+      <div class="card">
+        <h3>Reparação</h3>
+        <p>Reparamos computadores e dispositivos eletrônicos.</p>
+      </div>
+      <div class="card">
+        <h3>Manutenção</h3>
+        <p>Manutenção preventiva e corretiva.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sobre">
+    <h2>Sobre Nós</h2>
+    <p>A AM TECH SHOP é uma loja moçambicana especializada em venda e manutenção de eletrônicos. Atendemos com profissionalismo e qualidade.</p>
+  </section>
+
+  <section class="section" id="contacto">
+    <h2>Contacto</h2>
+    <p>WhatsApp: <a href="https://wa.me/seu_numero">Clique aqui</a></p>
+    <p>Facebook: <a href="https://facebook.com/amtechshop">facebook.com/amtechshop</a></p>
+  </section>
+
+  <div id="carrinho">
+    <h3>Seu Carrinho</h3>
+    <ul id="itens"></ul>
+    <button onclick="finalizarCompra()">Finalizar com M-Pesa/e-Mola</button>
+    <button onclick="fecharCarrinho()">Fechar</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AM TECH SHOP. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    let carrinho = [];
+
+    function adicionarCarrinho(produto) {
+      carrinho.push(produto);
+      document.getElementById('quantidade').innerText = carrinho.length;
+      alert(produto + ' adicionado ao carrinho.');
+    }
+
+    function mostrarCarrinho() {
+      const lista = document.getElementById('itens');
+      lista.innerHTML = '';
+      carrinho.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        lista.appendChild(li);
+      });
+      document.getElementById('carrinho').style.display = 'block';
+    }
+
+    function fecharCarrinho() {
+      document.getElementById('carrinho').style.display = 'none';
+    }
+
+    function finalizarCompra() {
+      let mensagem = 'Olá, quero finalizar minha compra com os seguintes itens: ' + carrinho.join(', ');
+      let numero = 'seu_numero';
+      window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`);
+    }
+  </script>
+
+</body>
+</html>
